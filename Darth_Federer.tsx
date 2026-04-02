@@ -1,5 +1,13 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 // Approximate dataset (can be refined with full ATP data)
 const data = [
@@ -31,35 +39,105 @@ const data = [
 
 export default function FedererDashboard() {
   return (
-    <div className="p-6 bg-black text-white min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Roger Federer Career Dashboard</h1>
+    <main className="dashboard">
+      <section className="hero">
+        <p className="eyebrow">Roger Federer</p>
+        <h1>Career Dashboard</h1>
+        <p className="lede">
+          A quick look at Federer&apos;s season-by-season win percentage,
+          career totals, and late-career resurgence.
+        </p>
+      </section>
 
-      <div className="bg-gray-900 p-4 rounded-2xl shadow-lg">
-        <h2 className="text-xl mb-4">Win % vs Age</h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={data}>
-            <XAxis dataKey="age" />
-            <YAxis domain={[40, 100]} />
-            <Tooltip />
-            <Line type="monotone" dataKey="winPct" strokeWidth={3} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <section className="stats-grid" aria-label="Career summary">
+        <article className="stat-card stat-card-green">
+          <span className="stat-label">Total Wins</span>
+          <strong className="stat-value">1251</strong>
+        </article>
+        <article className="stat-card stat-card-red">
+          <span className="stat-label">Total Losses</span>
+          <strong className="stat-value">275</strong>
+        </article>
+        <article className="stat-card stat-card-gold">
+          <span className="stat-label">Grand Slams</span>
+          <strong className="stat-value">20</strong>
+        </article>
+      </section>
 
-      <div className="mt-6 grid grid-cols-3 gap-4">
-        <div className="bg-green-700 p-4 rounded-xl">
-          <h3 className="text-lg">Total Wins</h3>
-          <p className="text-2xl font-bold">1251</p>
+      <section className="panel">
+        <div className="panel-header">
+          <h2>Win Percentage vs Age</h2>
+          <p>Approximate season-level ATP performance from age 18 to 41.</p>
         </div>
-        <div className="bg-red-700 p-4 rounded-xl">
-          <h3 className="text-lg">Total Losses</h3>
-          <p className="text-2xl font-bold">275</p>
+
+        <div className="chart-wrap">
+          <ResponsiveContainer width="100%" height={360}>
+            <LineChart
+              data={data}
+              margin={{ top: 16, right: 24, bottom: 8, left: 0 }}
+            >
+              <CartesianGrid stroke="rgba(148, 163, 184, 0.18)" />
+              <XAxis
+                dataKey="age"
+                stroke="#94a3b8"
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                domain={[40, 100]}
+                stroke="#94a3b8"
+                tickLine={false}
+                axisLine={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#0f172a",
+                  border: "1px solid #1e293b",
+                  borderRadius: "12px",
+                  color: "#e2e8f0",
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="winPct"
+                name="Win %"
+                stroke="#38bdf8"
+                strokeWidth={3}
+                dot={{ r: 3, fill: "#f8fafc" }}
+                activeDot={{ r: 5 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
-        <div className="bg-yellow-600 p-4 rounded-xl">
-          <h3 className="text-lg">Grand Slams</h3>
-          <p className="text-2xl font-bold">20</p>
+      </section>
+
+      <section className="panel">
+        <div className="panel-header">
+          <h2>Season Data</h2>
+          <p>The full dataset is listed below so the numbers stay visible on every deployment.</p>
         </div>
-      </div>
-    </div>
+
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Age</th>
+                <th>Win %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((season) => (
+                <tr key={season.year}>
+                  <td>{season.year}</td>
+                  <td>{season.age}</td>
+                  <td>{season.winPct}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
   );
 }
