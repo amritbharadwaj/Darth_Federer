@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import federerPortrait from "./src/assets/about-roger-federer.jpg";
 
 // Approximate dataset (can be refined with full ATP data)
 const data = [
@@ -70,44 +71,52 @@ export default function FedererDashboard() {
           <p>Approximate season-level ATP performance from age 18 to 41.</p>
         </div>
 
-        <div className="chart-wrap">
-          <ResponsiveContainer width="100%" height={360}>
-            <LineChart
-              data={data}
-              margin={{ top: 16, right: 24, bottom: 8, left: 0 }}
-            >
-              <CartesianGrid stroke="rgba(148, 163, 184, 0.18)" />
-              <XAxis
-                dataKey="age"
-                stroke="#94a3b8"
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                domain={[40, 100]}
-                stroke="#94a3b8"
-                tickLine={false}
-                axisLine={false}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#0f172a",
-                  border: "1px solid #1e293b",
-                  borderRadius: "12px",
-                  color: "#e2e8f0",
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="winPct"
-                name="Win %"
-                stroke="#38bdf8"
-                strokeWidth={3}
-                dot={{ r: 3, fill: "#f8fafc" }}
-                activeDot={{ r: 5 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+        <div className="chart-wrap chart-wrap-portrait">
+          <img
+            className="chart-portrait"
+            src={federerPortrait}
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="chart-overlay">
+            <ResponsiveContainer width="100%" height={360}>
+              <LineChart
+                data={data}
+                margin={{ top: 16, right: 24, bottom: 8, left: 0 }}
+              >
+                <CartesianGrid stroke="rgba(148, 163, 184, 0.18)" />
+                <XAxis
+                  dataKey="age"
+                  stroke="#cbd5e1"
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  domain={[40, 100]}
+                  stroke="#cbd5e1"
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#0f172a",
+                    border: "1px solid #1e293b",
+                    borderRadius: "12px",
+                    color: "#e2e8f0",
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="winPct"
+                  name="Win %"
+                  stroke="#38bdf8"
+                  strokeWidth={3}
+                  dot={{ r: 3, fill: "#f8fafc" }}
+                  activeDot={{ r: 5 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </section>
 
